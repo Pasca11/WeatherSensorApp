@@ -1,5 +1,7 @@
 package ru.amir.weatherSensor.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -16,9 +18,12 @@ public class Sensor {
 
     @NotEmpty
     @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters long")
+    @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "sensor")
+    //@JsonManagedReference
+    @JsonIgnore
     private List<Measurement> measurements;
 
     public Sensor() {

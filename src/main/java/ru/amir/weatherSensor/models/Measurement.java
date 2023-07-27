@@ -1,8 +1,11 @@
 package ru.amir.weatherSensor.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -20,14 +23,16 @@ public class Measurement {
     private int value;
 
     @Column(name = "raining")
-    private boolean isRaining;
+    private boolean raining;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "sensor_id", referencedColumnName = "id")
-    private Sensor owner;
+    @NotNull
+    //@JsonBackReference
+    private Sensor sensor;
 
     public int getId() {
         return id;
@@ -46,11 +51,11 @@ public class Measurement {
     }
 
     public boolean isRaining() {
-        return isRaining;
+        return raining;
     }
 
     public void setRaining(boolean raining) {
-        isRaining = raining;
+        this.raining = raining;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -61,11 +66,11 @@ public class Measurement {
         this.createdAt = createdAt;
     }
 
-    public Sensor getOwner() {
-        return owner;
+    public Sensor getSensor() {
+        return sensor;
     }
 
-    public void setOwner(Sensor owner) {
-        this.owner = owner;
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
     }
 }
